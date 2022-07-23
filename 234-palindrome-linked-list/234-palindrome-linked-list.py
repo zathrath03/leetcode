@@ -7,12 +7,9 @@ class Solution:
     def isPalindrome(self, head: Optional[ListNode]) -> bool:
         current_node = head
         node_list = []
-        while True:
+        while current_node is not None:
             node_list.append(current_node.val)
-            if current_node.next == None:
-                break
             current_node = current_node.next
-        print(node_list)
         for i in range(len(node_list)):
             if node_list[i] != node_list[-(i+1)]:
                 return False
