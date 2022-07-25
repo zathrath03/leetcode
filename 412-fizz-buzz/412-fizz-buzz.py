@@ -1,13 +1,21 @@
 class Solution:
     def fizzBuzz(self, n: int) -> List[str]:
         if n == 1:
-            return ["1"]
+            return ["1"]   
         elif n % 3 == 0:
             if n % 5 == 0:
-                return [*self.fizzBuzz(n-1), *["FizzBuzz"]]
+                temp = self.fizzBuzz(n-1)
+                temp.append("FizzBuzz")
+                return temp
             else:
-                return [*self.fizzBuzz(n-1), *["Fizz"]]
+                temp = self.fizzBuzz(n-1)
+                temp.append("Fizz")
+                return temp
         elif n % 5 == 0:
-            return [*self.fizzBuzz(n-1), *["Buzz"]]
+            temp = self.fizzBuzz(n-1)
+            temp.append("Buzz")
+            return temp
         else:
-            return [*self.fizzBuzz(n-1), *[str(n)]]
+            temp = self.fizzBuzz(n-1)
+            temp.append(str(n))
+            return temp
