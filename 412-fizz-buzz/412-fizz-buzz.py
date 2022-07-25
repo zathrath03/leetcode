@@ -4,10 +4,10 @@ class Solution:
             return ["1"]
         elif n % 3 == 0:
             if n % 5 == 0:
-                return self.fizzBuzz(n-1) + ["FizzBuzz"]
+                return [*self.fizzBuzz(n-1), *["FizzBuzz"]]
             else:
-                return self.fizzBuzz(n-1) + ["Fizz"]
+                return [*self.fizzBuzz(n-1), *["Fizz"]]
         elif n % 5 == 0:
-            return self.fizzBuzz(n-1) + ["Buzz"]
+            return [*self.fizzBuzz(n-1), *["Buzz"]]
         else:
-            return self.fizzBuzz(n-1) + [str(n)]
+            return [*self.fizzBuzz(n-1), *[str(n)]]
