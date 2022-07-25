@@ -6,7 +6,8 @@ class Solution:
         for num in nums:
             if num:
                 temp_consecutive_ones += 1
-                max_consecutive_ones = max(max_consecutive_ones, temp_consecutive_ones)
+                if temp_consecutive_ones > max_consecutive_ones:
+                    max_consecutive_ones = temp_consecutive_ones 
             else:
                 temp_consecutive_ones = 0
 
