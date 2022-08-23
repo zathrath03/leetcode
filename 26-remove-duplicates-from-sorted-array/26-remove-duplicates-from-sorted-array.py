@@ -1,7 +1,7 @@
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        temp = -101
-        i = 0
+        temp = nums[0]
+        i = 1
         while i < len(nums):
             if temp == nums[i]:
                 nums.remove(nums[i])
