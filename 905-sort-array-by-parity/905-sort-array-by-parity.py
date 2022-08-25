@@ -3,8 +3,8 @@ class Solution:
         oddPtr = 0
         evenPtr = len(nums) - 1
         
-        while oddPtr < evenPtr:
-            while oddPtr < evenPtr and nums[oddPtr] % 2 == 0:
+        while evenPtr > oddPtr:
+            while evenPtr > oddPtr and nums[oddPtr] % 2 == 0:
                 oddPtr += 1
             while evenPtr > oddPtr and nums[evenPtr] % 2 == 1:
                 evenPtr -= 1
