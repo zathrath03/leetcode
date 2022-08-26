@@ -1,7 +1,6 @@
 class Solution:
     def heightChecker(self, heights: List[int]) -> int:
-        sortedCopyOfHeights = heights.copy()
-        sortedCopyOfHeights.sort()
+        sortedCopyOfHeights = sorted(heights)
         count = 0
         
         for i in range(len(heights)):
