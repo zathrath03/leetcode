@@ -1,6 +1,6 @@
 class Solution:
     def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
-        values = [False] * (len(nums))
+        values = [False] * len(nums)
         disappearedNumbers = []
         
         for val in nums:
