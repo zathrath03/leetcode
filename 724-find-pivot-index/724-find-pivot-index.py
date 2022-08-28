@@ -1,12 +1,12 @@
 class Solution:
     def pivotIndex(self, nums: List[int]) -> int:
-        prefixSums = [0]
+        leftSum = 0
+        rightSum = sum(nums)
         
-        for i in range(len(nums)):
-            prefixSums.append(prefixSums[i] + nums[i])
-
-        for i in range(len(nums)):
-            if prefixSums[i] == prefixSums[-1] - prefixSums[i] - nums[i]:
+        for i, val in enumerate(nums):
+            rightSum -= val
+            if leftSum == rightSum:
                 return i
-        
+            leftSum += val
+            
         return -1
