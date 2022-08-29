@@ -1,9 +1,10 @@
 class Solution:
     def isIsomorphic(self, s: str, t: str) -> bool:
-        charMap = {}
+        charMapStoT = {}
+        charMapTtoS = {}
         for i, char in enumerate(s):
-            if charMap.setdefault(char, t[i]) != t[i]:
+            if charMapStoT.setdefault(char, t[i]) != t[i]:
                 return False
-            if len([key for key, value in charMap.items() if value == t[i]]) > 1:
+            if charMapTtoS.setdefault(t[i], char) != char:
                 return False
         return True
