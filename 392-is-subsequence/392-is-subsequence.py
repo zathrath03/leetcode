@@ -1,7 +1,5 @@
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
-        if not set(s).issubset(set(t)):
-            return False
         
         t_ptr = 0
         for char in s:
