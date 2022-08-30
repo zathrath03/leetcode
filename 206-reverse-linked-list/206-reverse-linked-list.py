@@ -10,5 +10,5 @@ class Solution:
         else:
             reversedList = self.reverseList(head.next)
             head.next.next = head
-            head.next = None
+            head.next = None          
             return reversedList
