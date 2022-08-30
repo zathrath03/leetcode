@@ -5,8 +5,7 @@
 #         self.next = next
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        mergedListHead = ListNode()
-        mergedListTail = mergedListHead
+        mergedListHead = mergedListTail = ListNode()
         
         while list1 and list2:
             if list1.val < list2.val:
@@ -17,9 +16,6 @@ class Solution:
                 list2 = list2.next
             mergedListTail = mergedListTail.next
         
-        if list1:
-            mergedListTail.next = list1
-        else:
-            mergedListTail.next = list2
-        
+        mergedListTail.next = list1 if list1 else list2
+                
         return mergedListHead.next
