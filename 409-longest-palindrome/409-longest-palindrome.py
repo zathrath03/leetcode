@@ -11,5 +11,4 @@ class Solution:
         if oddPresent:
             length += 1
             
-        return length
-    
+        return length    
