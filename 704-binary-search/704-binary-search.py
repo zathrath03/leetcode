@@ -9,7 +9,7 @@ class Solution:
             return index
         if nums[index] > target:
             return self.search(nums[:index], target)
-        if nums[index] < target:
+        else:
             rtn = self.search(nums[index+1:], target)
             if rtn == -1:
                 return rtn
