@@ -11,7 +11,6 @@ class Solution:
         if ((root == p and contains(root, q)) or (root == q and contains(root, p))
             or (contains(root.left, p) and contains(root.right, q))
             or (contains(root.right, p) and contains(root.left, q))):
-            
             return root
 
         if contains(root.left, p) and contains(root.left, q):
