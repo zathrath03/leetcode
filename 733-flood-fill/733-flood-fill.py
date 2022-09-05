@@ -1,21 +1,24 @@
 class Solution:
-    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
-        if image[sr][sc] == color:
-            return image
-        
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, newColor: int) -> List[List[int]]:
         startColor = image[sr][sc]
-        
-        def floodFillRecurs(sr, sc, newColor):
-            image[sr][sc] = newColor
-            if (sr-1) >= 0 and image[sr-1][sc] == startColor:
-                floodFillRecurs(sr-1, sc, newColor)
-            if (sr+1) < len(image) and image[sr+1][sc] == startColor:
-                floodFillRecurs(sr+1, sc, newColor)
-            if (sc-1) >= 0 and image[sr][sc-1] == startColor:
-                floodFillRecurs(sr, sc-1, newColor)
-            if (sc+1) < len(image[0]) and image[sr][sc+1] == startColor:
-                floodFillRecurs(sr, sc+1, newColor)
-        
-        floodFillRecurs(sr, sc, color)
+        if startColor == newColor:
+            return image
+
+        R = len(image) - 1
+        C = len(image[0]) - 1
+
+        def floodFillRecurs(r, c):
+            if image[r][c] == startColor:
+                image[r][c] = newColor
+                if r > 0:
+                    floodFillRecurs(r-1, c)
+                if r < R:
+                    floodFillRecurs(r+1, c)
+                if c > 0:
+                    floodFillRecurs(r, c-1)
+                if c < C:
+                    floodFillRecurs(r, c+1)
+
+        floodFillRecurs(sr, sc)
 
         return image
