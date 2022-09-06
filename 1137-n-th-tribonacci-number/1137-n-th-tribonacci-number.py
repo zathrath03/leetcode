@@ -1,15 +1,8 @@
 class Solution:
+    cache = {0: 0, 1: 1, 2: 1}
+
     def tribonacci(self, n: int) -> int:
-        if n == 0:
-            return 0
-        if n == 1:
-            return 1
-        if n == 2:
-            return 1
-
-        sequence = [0, 1, 1]
-
-        for _ in range(n-1):
-            sequence.append(sum(sequence[-3:]))
-
-        return sequence[n]
+        if n in self.cache:
+            return self.cache[n]
+        self.cache[n] = self.tribonacci(n-1) + self.tribonacci(n-2) + self.tribonacci(n-3)        
+        return self.cache[n]
