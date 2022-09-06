@@ -1,9 +1,8 @@
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
-        if len(cost) == 2:
-            return min(cost)
-        cache = {0: cost[0], 1: cost[1]}
-        for i in range(2, len(cost)):
-            cache[i] = cost[i] + min(cache[i-1], cache[i-2])
-            
-        return min(cache[len(cost)-1], cache[len(cost)-2])
+        one_down = two_down = 0
+        for i in range(2, len(cost)+1):
+            temp = one_down
+            one_down = min(one_down + cost[i-1], two_down + cost[i-2])
+            two_down = temp
+        return one_down
