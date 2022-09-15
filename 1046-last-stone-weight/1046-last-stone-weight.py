@@ -1,11 +1,10 @@
 class Solution:
     def lastStoneWeight(self, stones: List[int]) -> int:
-        stones.sort(reverse=True)
-        while stones and len(stones) > 1:
-            if stones[0] == stones[1]:
-                stones = stones[2:]
-            else:
-                stones = [stones[0] - stones[1]] + stones[2:]
-                stones.sort(reverse=True)
+        stones.sort()
+        while len(stones) > 1:
+            stone_1 = stones.pop()
+            stone_2 = stones.pop()
+            if stone_1 != stone_2:
+                bisect.insort(stones, stone_1 - stone_2)
         
         return stones[0] if stones else 0
