@@ -16,7 +16,7 @@ class Solution:
         
         def allValidWord2s(word: str) -> set:
             valid_word2s = set()
-            for i in range(len(word)-1, -1, -1):
+            for i in reversed(range(len(word))):
                 slc = word[i:]
                 rev = slc[::-1]
                 if slc == rev:
