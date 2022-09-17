@@ -4,7 +4,7 @@ class Solution:
         word_lookup = {w: i for i, w in enumerate(words)}
         output = []
         
-        def allValidWord1s(word: str) -> list[str]:
+        def allValidWord1s(word: str) -> set:
             valid_word1s = set()
             for i in range(len(word)):
                 slc = word[:i+1]
@@ -14,7 +14,7 @@ class Solution:
             return valid_word1s
         
         
-        def allValidWord2s(word: str) -> list[str]:
+        def allValidWord2s(word: str) -> set:
             valid_word2s = set()
             for i in range(len(word)-1, -1, -1):
                 slc = word[i:]
@@ -24,19 +24,22 @@ class Solution:
             return valid_word2s
         
 
+        def getIndexes(words: set) -> set:
+            indexes = set()
+            for word in words:
+                index = word_lookup.get(word)
+                if index is not None:
+                    indexes.add(index)
+            return indexes
+        
+        
         for i, w in enumerate(words):
-            rev = w[::-1]
-            rev_index = word_lookup.get(rev)
+            rev_index = word_lookup.get(w[::-1])
             if rev_index is not None and rev_index != i:
                 output.append([i, rev_index])
-            for word1 in allValidWord1s(w):
-                word1_index = word_lookup.get(word1)
-                if word1_index is not None:
-                    output.append([word1_index, i])
-            for word2 in allValidWord2s(w):
-                word2_index = word_lookup.get(word2)
-                if word2_index is not None:
-                    output.append([i, word2_index])
+            for index in getIndexes(allValidWord1s(w)):
+                output.append([index, i])
+            for index in getIndexes(allValidWord2s(w)):
+                output.append([i, index])
 
-            
         return output
