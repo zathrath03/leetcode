@@ -1,18 +1,6 @@
 class Solution:
-    def pushDominoes(self, dominoes: str) -> str:
-        n = len(dominoes)
-        left = [False] * n
-        right = [False] * n
-        output = ['.'] * n
-        
-        pushedRight = False
-        for i, push in enumerate(dominoes):
-            if push == 'L':
-                pushedRight = False
-            elif pushedRight or push == 'R':
-                right[i] = True
-                pushedRight = True
-        
+    def mapLeftPushes(self, dominoes: str) -> list:
+        left = [False] * len(dominoes)
         pushedLeft = False
         for i in reversed(range(len(dominoes))):
             push = dominoes[i]
@@ -21,12 +9,36 @@ class Solution:
             elif pushedLeft or push =='L':
                 left[i] = True
                 pushedLeft = True
+        return left
+    
+    def mapRightPushes(self, dominoes: str) -> list:
+        right = [False] * len(dominoes)
+        pushedRight = False
+        for i, push in enumerate(dominoes):
+            if push == 'L':
+                pushedRight = False
+            elif pushedRight or push == 'R':
+                right[i] = True
+                pushedRight = True
+        return right
+    
+    def propogatePushesWithoutConflicts(self, left, right, length):
+        output = ['.'] * length
         
         for i, (l, r) in enumerate(zip(left, right)):
             if l and not r:
                 output[i] = 'L'
             elif r and not l:
                 output[i] = 'R'
+        
+        return output
+    
+    def pushDominoes(self, dominoes: str) -> str:
+        
+        
+        right = self.mapRightPushes(dominoes)
+        left = self.mapLeftPushes(dominoes)
+        output = self.propogatePushesWithoutConflicts(left, right, len(dominoes))
 
         i = 0
         while i < len(output):
