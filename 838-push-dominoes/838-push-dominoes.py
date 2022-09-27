@@ -33,13 +33,7 @@ class Solution:
         
         return output
     
-    def pushDominoes(self, dominoes: str) -> str:
-        
-        
-        right = self.mapRightPushes(dominoes)
-        left = self.mapLeftPushes(dominoes)
-        output = self.propogatePushesWithoutConflicts(left, right, len(dominoes))
-
+    def propogateConflicts(self, output):
         i = 0
         while i < len(output):
             if output[i] == 'R':
@@ -56,4 +50,13 @@ class Solution:
                 for j in range(end - 1, start + sub_len//2 - 1 + (sub_len & 1), -1):
                     output[j] = 'L'
             i += 1
+        return output
+    
+    def pushDominoes(self, dominoes: str) -> str:
+
+        right = self.mapRightPushes(dominoes)
+        left = self.mapLeftPushes(dominoes)
+        output = self.propogatePushesWithoutConflicts(left, right, len(dominoes))
+        output = self.propogateConflicts(output)
+
         return "".join(output)
