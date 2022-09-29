@@ -1,5 +1,3 @@
-from bisect import bisect_left
-
 class Solution:
     def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
         n = len(arr)
@@ -9,11 +7,7 @@ class Solution:
             indexOfX = arr.index(x)
             output = [x]
         except ValueError:
-            indexOfX = bisect_left(arr, x)
-            if indexOfX == n:
-                indexOfX = n - 1
-            elif indexOfX > 0 and abs(arr[indexOfX - 1] - x) <= abs(arr[indexOfX] - x):
-                indexOfX = indexOfX - 1
+            indexOfX = min(enumerate(arr), key = lambda i: abs(i[1] - x))[0]
             output = [arr[indexOfX]]
         
         left = indexOfX - 1
