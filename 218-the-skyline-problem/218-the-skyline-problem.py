@@ -1,56 +1,30 @@
-
-# Define the disjoint-set structure.
-class UnionFind():
-    def __init__(self, N):
-        self.root = list(range(N))
-    def find(self, x):
-        if self.root[x] != x:
-            self.root[x] = self.find(self.root[x])
-        return self.root[x]
-    def union(self, x, y):
-        self.root[x] = self.root[y]
-        
 class Solution:
     def getSkyline(self, buildings: List[List[int]]) -> List[List[int]]:
-        # Sort the unique positions of all the edges.
-        edges = sorted(list(set([x for building in buildings for x in building[:2]])))
         
-        # Hast table 'edge_index_map' record every {position : index} pairs in 'edges'.
-        edge_index_map = {x:idx for idx, x in enumerate(edges)} 
+        critical = []
         
-        # Sort buildings by descending order of heights.
-        buildings.sort(key=lambda x: -x[2])
-        
-        # Initalize a disjoin set for all indexs, each index's 
-        # root is itself. Since there is no building added yet, 
-        # the height at each position is 0.
-        n = len(edges)
-        edge_UF = UnionFind(n)
-        heights = [0] * n
-    
-        # Iterate over all the buildings by descending height.
-        for left_edge, right_edge, height in buildings:
-            # For current x position, get the corresponding index.
-            left_idx, right_idx = edge_index_map[left_edge], edge_index_map[right_edge]
+        for L, R, H in buildings:
+            critical.append((L, -H, R))
+            critical.append((R, 0, 0))
             
-            # While we haven't update the the root of 'left_idx':
-            while left_idx < right_idx: 
-                # Find the root of left index 'left_idx', that is:
-                # The rightmost index having the same height as 'left_idx'.
-                left_idx = edge_UF.find(left_idx)
-
-                # If left_idx < right_idx, we have to update both the root and height
-                # of left_idx, and move on to the next index towards right_idx.
-                # That is: increment left_idx by 1.
-                if left_idx < right_idx:
-                    edge_UF.union(left_idx, right_idx)
-                    heights[left_idx] = height
-                    left_idx += 1
-                    
-        # Finally, we just need to iterate over updated heights, and
-        # add every skyline key point to 'answer'.
-        answer = []
-        for i in range(n):
-            if i == 0 or heights[i] != heights[i - 1]:
-                answer.append([edges[i], heights[i]])
-        return answer
+        maxHeap = []
+        output = [[0,0]]
+        critical.sort()
+        
+        for start, negHeight, end in critical:
+            
+            while maxHeap and maxHeap[0][1] <= start:
+                heapq.heappop(maxHeap)
+                
+            if negHeight:
+                heapq.heappush(maxHeap, (negHeight, end))
+                
+            if not maxHeap and output[-1][1] != 0:
+                output.append([start, 0])
+            
+            if maxHeap and maxHeap[0][0]* -1 != output[-1][1]:
+                output.append([start, maxHeap[0][0] * -1])
+            
+            
+            
+        return output[1:]
