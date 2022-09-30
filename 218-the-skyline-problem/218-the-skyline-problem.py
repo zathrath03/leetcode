@@ -1,53 +1,56 @@
+
+# Define the disjoint-set structure.
+class UnionFind():
+    def __init__(self, N):
+        self.root = list(range(N))
+    def find(self, x):
+        if self.root[x] != x:
+            self.root[x] = self.find(self.root[x])
+        return self.root[x]
+    def union(self, x, y):
+        self.root[x] = self.root[y]
+        
 class Solution:
     def getSkyline(self, buildings: List[List[int]]) -> List[List[int]]:
-        # Iterate over the left and right edges of all the buildings, 
-        # If its a left edge, add (left, height) to 'edges'.
-        # Otherwise, add (right, -height) to 'edges'.
-        edges = []
-        for left, right, height in buildings:
-            edges.append([left, height])
-            edges.append([right, -height])
-        edges.sort()
+        # Sort the unique positions of all the edges.
+        edges = sorted(list(set([x for building in buildings for x in building[:2]])))
         
-        # Initailize two empty priority queues 'live' and 'past' 
-        # for the live buildings and the past buildings.
-        live, past = [], []
+        # Hast table 'edge_index_map' record every {position : index} pairs in 'edges'.
+        edge_index_map = {x:idx for idx, x in enumerate(edges)} 
+        
+        # Sort buildings by descending order of heights.
+        buildings.sort(key=lambda x: -x[2])
+        
+        # Initalize a disjoin set for all indexs, each index's 
+        # root is itself. Since there is no building added yet, 
+        # the height at each position is 0.
+        n = len(edges)
+        edge_UF = UnionFind(n)
+        heights = [0] * n
+    
+        # Iterate over all the buildings by descending height.
+        for left_edge, right_edge, height in buildings:
+            # For current x position, get the corresponding index.
+            left_idx, right_idx = edge_index_map[left_edge], edge_index_map[right_edge]
+            
+            # While we haven't update the the root of 'left_idx':
+            while left_idx < right_idx: 
+                # Find the root of left index 'left_idx', that is:
+                # The rightmost index having the same height as 'left_idx'.
+                left_idx = edge_UF.find(left_idx)
+
+                # If left_idx < right_idx, we have to update both the root and height
+                # of left_idx, and move on to the next index towards right_idx.
+                # That is: increment left_idx by 1.
+                if left_idx < right_idx:
+                    edge_UF.union(left_idx, right_idx)
+                    heights[left_idx] = height
+                    left_idx += 1
+                    
+        # Finally, we just need to iterate over updated heights, and
+        # add every skyline key point to 'answer'.
         answer = []
-        idx = 0
-        
-        # Iterate over all the sorted edges.
-        while idx < len(edges):
-            # Since we might have multiple edges at same x,
-            # Let the 'curr_x' be the current position.
-            curr_x = edges[idx][0]
-            
-            # While we are handling the edges at 'curr_x':
-            while idx < len(edges) and edges[idx][0] == curr_x:
-                height = edges[idx][1]
-                
-                # If 'height' > 0, meaning a building of height 'height'
-                # is live, push 'height' to 'live'. 
-                # Otherwise, a building of height 'height' is passed, 
-                # push the height to 'past'.
-                if height > 0:
-                    heapq.heappush(live, -height)
-                else:
-                    heapq.heappush(past, height)
-                idx += 1
-            
-            # While the top height from 'live' equals to that from 'past',
-            # Remove top height from both 'live' and 'past'.
-            while past and past[0] == live[0]:
-                heapq.heappop(live)
-                heapq.heappop(past)
-            
-            # Get the maximum height from 'live'.
-            max_height = -live[0] if live else 0
-            
-            # If the height changes at 'curr_x', we add this
-            # skyline key point [curr_x, max_height] to 'answer'.
-            if not answer or answer[-1][1] != max_height:
-                answer.append([curr_x, max_height])
-                
-        # Return 'answer' as the skyline.
-        return answer            
+        for i in range(n):
+            if i == 0 or heights[i] != heights[i - 1]:
+                answer.append([edges[i], heights[i]])
+        return answer
