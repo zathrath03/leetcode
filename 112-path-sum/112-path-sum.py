@@ -8,18 +8,18 @@ class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         if not root:
             return False
-        if root.val == targetSum and not root.left and not root.right:
-            return True
+        if not root.left and not root.right:
+            return root.val == targetSum
         
-        if root.left and root.right:
-            root.left.val += root.val
-            root.right.val += root.val
-            return self.hasPathSum(root.left, targetSum) or self.hasPathSum(root.right, targetSum)
-        elif root.left:
-            root.left.val += root.val
-            return self.hasPathSum(root.left, targetSum)
-        elif root.right:
-            root.right.val += root.val
-            return self.hasPathSum(root.right, targetSum)
-        else:
-            return False
+        sums = set()
+        def travel(node, parentSum):
+            parentSum = parentSum + node.val
+            if node.left:
+                travel(node.left, parentSum)
+            if node.right:
+                travel(node.right, parentSum)
+            if not node.left and not node.right:
+                sums.add(parentSum)
+        
+        travel(root, 0)
+        return targetSum in sums
