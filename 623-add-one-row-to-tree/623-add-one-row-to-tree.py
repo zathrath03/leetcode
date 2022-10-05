@@ -7,7 +7,8 @@
 class Solution:
     def addOneRow(self, root: Optional[TreeNode], val: int, depth: int) -> Optional[TreeNode]:
         if depth == 1:
-            return TreeNode(val, root)
+            new_root = TreeNode(val, root)
+            return new_root
 
         q = deque()
         q.append((root, 1))
