@@ -12,16 +12,15 @@ class Solution:
         
         while stack:
             node = stack.pop()
-            need = k - node.val
             
             if node.val in needed:
                 return True
             else:
                 needed.add(k - node.val)
             
-            if node.left:  # and need < node.val:
+            if node.left:
                 stack.append(node.left)
-            if node.right:  # and need > node.val:
+            if node.right:
                 stack.append(node.right)
             
         return False
