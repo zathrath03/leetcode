@@ -8,13 +8,12 @@ class Solution:
         if head.next == None:
             return None
         
-        ptr1 = ptr2 = head
+        slow, fast = head, head.next.next
         
-        while ptr2 and ptr2.next:
-            prev = ptr1
-            ptr1 = ptr1.next
-            ptr2 = ptr2.next.next
+        while fast and fast.next:
+            slow =  slow.next
+            fast = fast.next.next
             
-        prev.next = ptr1.next
+        slow.next = slow.next.next
         
         return head
