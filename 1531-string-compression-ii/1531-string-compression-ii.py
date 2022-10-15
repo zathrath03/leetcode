@@ -4,7 +4,7 @@ class Solution:
         def dp(idx: int, last_char: str, last_char_count: int, k: int) -> int:
             if k < 0:
                 return float('inf')
-            if idx == n:
+            if idx == len(s):
                 return 0
 
             delete_char = dp(idx + 1, last_char, last_char_count, k - 1)
@@ -16,5 +16,4 @@ class Solution:
 
             return min(delete_char, keep_char)
 
-        n = len(s)
         return dp(0, "", 0, k)
