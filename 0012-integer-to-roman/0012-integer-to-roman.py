@@ -1,17 +1,16 @@
 class Solution:
     def intToRoman(self, num: int) -> str:
-        romans = {1: "I", 4: "IV", 5: "V", 9: "IX", 10: "X", 40: "XL", 50: "L", 90: "XC", 100: "C", 400: "CD", 500: "D", 900: "CM", 1000: "M"}
+        romans = {1000: "M", 900: "CM", 500: "D", 400: "CD", 100: "C", 90: "XC",
+                  50: "L", 40: "XL", 10: "X", 9: "IX", 5: "V", 4: "IV", 1: "I"}
         if num in romans:
             return romans[num]
-        
-        sorted_roman_integers = sorted(romans.keys(), reverse=True)
-        
+
         output = ""
-        for i in range(len(sorted_roman_integers)):
+        for key in romans:
             while num > 0:
-                if sorted_roman_integers[i] > num:
+                if key > num:
                     break
-                num -= sorted_roman_integers[i]
-                output += romans[sorted_roman_integers[i]]
-            
+                num -= key
+                output += romans[key]
+
         return output
