@@ -5,12 +5,12 @@ class Solution:
         if num in romans:
             return romans[num]
 
-        output = ""
+        output = []
         for key in romans:
             while num > 0:
                 if key > num:
                     break
                 num -= key
-                output += romans[key]
+                output.append(romans[key])
 
-        return output
+        return "".join(output)
