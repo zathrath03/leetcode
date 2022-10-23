@@ -1,7 +1,7 @@
 class Solution:
     def findErrorNums(self, nums: List[int]) -> List[int]:
         hmap = dict()
-        n = float('-inf')
+        n = 0
         output = []
         
         for num in nums:
