@@ -3,7 +3,6 @@ class Solution:
         anagrams = defaultdict(list)
 
         for chars in strs:
-            sorted_chars = "".join(sorted(chars))
-            anagrams[sorted_chars].append(chars)
+            anagrams[tuple(sorted(chars))].append(chars)
 
         return list(anagrams.values())
