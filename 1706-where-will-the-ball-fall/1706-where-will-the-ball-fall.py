@@ -8,15 +8,16 @@ class Solution:
         return output
 
     def find_output(self, col: int) -> int:
-        grid = self.grid
-        num_rows = len(grid)
-        num_cols = len(grid[0])
+        num_rows = len(self.grid)
         for row in range(num_rows):
-            slant = grid[row][col]
-            boundary_col = col + slant
-            if (0 <= boundary_col < num_cols
-                    and grid[row][boundary_col] == slant):
-                col += slant
-            else:
+            if (self.is_trapped(row, col)):
                 return -1
-        return boundary_col
+            col += self.grid[row][col]
+        return col
+
+    def is_trapped(self, row, col):
+        slant = self.grid[row][col]
+        boundary_col = col + slant
+        num_cols = len(self.grid[0])
+        return (boundary_col < 0 or boundary_col >= num_cols
+                or self.grid[row][boundary_col] != slant)
