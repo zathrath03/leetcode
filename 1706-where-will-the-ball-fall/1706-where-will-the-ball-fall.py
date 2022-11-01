@@ -14,7 +14,8 @@ class Solution:
                 return -1
             col += self.grid[row][col]
         return col
-
+    
+    @cache
     def is_trapped(self, row, col):
         slant = self.grid[row][col]
         boundary_col = col + slant
