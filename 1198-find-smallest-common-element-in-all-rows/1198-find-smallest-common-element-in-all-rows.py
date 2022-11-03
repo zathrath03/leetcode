@@ -3,7 +3,6 @@ class Solution:
         num_rows = len(mat)
         num_cols = len(mat[0])
         ptr = [0] * num_rows
-        max_ptr = 0
         largest_current_value = mat[0][0]
         current_element = [0] * num_rows
 
@@ -15,7 +14,5 @@ class Solution:
                 if (col := ptr[row]) == num_cols:
                     return -1
                 largest_current_value = current_element[row] = mat[row][col]
-                max_ptr = max(max_ptr, col)
                 if len(set(current_element)) == 1:
                     return largest_current_value
-        return -1
