@@ -7,7 +7,7 @@ class Solution:
         largest_current_value = mat[0][0]
         current_element = [0] * num_rows
 
-        while max_ptr < num_cols:
+        while True:
             for row in range(num_rows):
                 while (ptr[row] < num_cols
                        and mat[row][ptr[row]] < largest_current_value):
