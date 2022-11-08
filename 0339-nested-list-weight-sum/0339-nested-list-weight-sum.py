@@ -44,14 +44,13 @@
 class Solution:
     def depthSum(self, nestedList: list[NestedInteger]) -> int:
         
-        def depth_sum_recursive(nestedList: list, depth: int) -> int:
+        def depth_sum_recursive(nestedList: list[NestedInteger], depth: int) -> int:
             output = 0
-            for elem in nestedList:
-                if val := elem.getInteger():
+            for nestedInteger in nestedList:
+                if val := nestedInteger.getInteger():
                     output += val * depth
                 else:
-                    output += depth_sum_recursive(elem.getList(), depth + 1)
+                    output += depth_sum_recursive(nestedInteger.getList(), depth + 1)
             return output
-        
 
         return depth_sum_recursive(nestedList, 1)
