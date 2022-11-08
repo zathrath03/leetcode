@@ -1,14 +1,11 @@
 class Solution:
     def makeGood(self, s: str) -> str:
+        output = []
         
-        while True:
-            for i in range(len(s) - 1):
-                char_val = ord(s[i])
-                next_char_val = ord(s[i+1])
-                if abs(char_val - next_char_val) == 32:
-                    s = s[:i] + s[i+2:]
-                    break
+        for char in s:
+            if output and (ord(char) ^ ord(output[-1])) == 32:
+                output.pop()
             else:
-                break
-        
-        return s
+                output.append(char)
+
+        return "".join(output)
