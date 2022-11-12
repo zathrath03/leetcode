@@ -1,16 +1,21 @@
-from bisect import bisect
+from heapq import heappush, heappop, heappushpop
 
 class MedianFinder:
 
     def __init__(self):
-        self.datastream = []
+        self.heaps = [], []
 
     def addNum(self, num: int) -> None:
-        self.datastream.insert(bisect(self.datastream, num), num)
-
+        lo, hi = self.heaps
+        if len(lo) == len(hi):
+            num = heappushpop(hi, num)
+            heappush(lo, -num)
+        else:
+            num = heappushpop(lo, -num)
+            heappush(hi, -num)
+        
     def findMedian(self) -> float:
-        length = len(self.datastream)
-        midpoint = length // 2
-        if length & 1:
-            return float(self.datastream[midpoint])
-        return (self.datastream[midpoint] + self.datastream[midpoint - 1]) / 2
+        lo, hi = self.heaps
+        if len(lo) == len(hi):
+            return (hi[0] - lo[0]) / 2
+        return -lo[0]
