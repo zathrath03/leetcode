@@ -8,19 +8,4 @@
 class Solution:
     
     def guessNumber(self, n: int) -> int:
-        max_guess = n + 1
-        min_guess = 0
-        my_guess = (max_guess - min_guess) // 2
-        RC = guess(my_guess)
-        
-        while RC:
-            if RC == -1:
-                max_guess = my_guess
-                my_guess = (my_guess + min_guess) // 2
-                RC = guess(my_guess)
-            elif RC == 1:
-                min_guess = my_guess
-                my_guess = (max_guess + my_guess) // 2
-                RC = guess(my_guess)
-                
-        return my_guess
+        return bisect_left(range(n), 0, key=lambda num: -guess(num))
