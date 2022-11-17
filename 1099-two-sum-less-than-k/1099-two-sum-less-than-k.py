@@ -8,12 +8,10 @@ class Solution:
         
         while lft < rgt:
             total = nums[lft] + nums[rgt]
-            if closest_sum < total < k:
-                closest_sum = total
-                lft += 1
-            elif total >= k:
+            if total >= k:
                 rgt -= 1
             else:
+                closest_sum = max(total, closest_sum)
                 lft += 1
 
         return closest_sum
