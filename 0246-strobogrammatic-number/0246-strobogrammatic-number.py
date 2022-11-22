@@ -10,7 +10,6 @@ class Solution:
             right = num[rgt]
             
             if (left not in strobogrammatic_numbers
-                 or right not in strobogrammatic_numbers
                  or strobogrammatic_numbers[left] != right):
                 return False
             lft += 1
