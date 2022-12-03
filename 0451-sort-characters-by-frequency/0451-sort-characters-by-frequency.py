@@ -3,6 +3,6 @@ class Solution:
         c = Counter(s).most_common()
         output = []
         for char, freq in c:
-            output.extend([char]*freq)
+            output.append(char * freq)
             
         return "".join(output)
