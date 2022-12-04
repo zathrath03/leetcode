@@ -1,7 +1,7 @@
 class Solution:
     def minimumAverageDifference(self, nums: List[int]) -> int:
         n = len(nums)
-        avg_dif = {}
+        min_avg_dif = (100001,)
         left_sum = 0
         right_sum = sum(nums)
         
@@ -13,6 +13,8 @@ class Solution:
                 right_avg = right_sum // (n - 1 - i)
             else:
                 right_avg = 0
-            avg_dif.setdefault(abs(left_avg - right_avg), i)
+            avg_dif = abs(left_avg - right_avg)
+            if avg_dif < min_avg_dif[0]:
+                min_avg_dif = (avg_dif, i)
             
-        return avg_dif[min(avg_dif)]
+        return min_avg_dif[1]
