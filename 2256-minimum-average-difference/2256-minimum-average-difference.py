@@ -4,7 +4,7 @@ class Solution:
         min_avg_dif = (100001,)
         left_sum = 0
         right_sum = sum(nums)
-        
+
         for i in range(n):
             left_sum += nums[i]
             right_sum -= nums[i]
@@ -16,5 +16,5 @@ class Solution:
             avg_dif = abs(left_avg - right_avg)
             if avg_dif < min_avg_dif[0]:
                 min_avg_dif = (avg_dif, i)
-            
+
         return min_avg_dif[1]
