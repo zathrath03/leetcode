@@ -4,11 +4,12 @@ public class Solution {
         int sum = piles.Sum();
         for (int _ = 0; _ < k; _++)
         {
-            int halfOfLargestPile = maxHeap.Peek() / 2;
+            int largestPile = maxHeap.Peek();
+            int halfOfLargestPile = largestPile / 2;
             sum -= halfOfLargestPile;
-            int p = maxHeap.Dequeue() - halfOfLargestPile;
+            int p = largestPile - halfOfLargestPile;
 
-            maxHeap.Enqueue(p, -p);
+            maxHeap.EnqueueDequeue(p, -p);
         }
         return sum;
     }
