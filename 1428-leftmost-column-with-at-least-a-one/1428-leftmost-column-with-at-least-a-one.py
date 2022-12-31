@@ -14,19 +14,20 @@ class Solution:
 
         self.binaryMatrix = binaryMatrix
         self.rows, self.cols = binaryMatrix.dimensions()
-        leftmost_column_with_one = self.MAX_MATRIX_LENGTH + 1
+        self.leftmost_column_with_one = self.MAX_MATRIX_LENGTH + 1
 
         rows_with_ones = self.get_rows_with_ones()
 
         for row in rows_with_ones:
             this_row_leftmost_column_with_one = self.binary_search_row(row)
-            leftmost_column_with_one = min(
-                leftmost_column_with_one, this_row_leftmost_column_with_one
+            self.leftmost_column_with_one = min(
+                self.leftmost_column_with_one,
+                this_row_leftmost_column_with_one,
             )
 
         return (
-            leftmost_column_with_one
-            if leftmost_column_with_one <= self.MAX_MATRIX_LENGTH
+            self.leftmost_column_with_one
+            if self.leftmost_column_with_one <= self.MAX_MATRIX_LENGTH
             else -1
         )
 
@@ -41,6 +42,8 @@ class Solution:
                 right = mid - 1
             else:
                 left = mid + 1
+                if left >= self.leftmost_column_with_one:
+                    break
 
         return leftmost_column_with_one
 
