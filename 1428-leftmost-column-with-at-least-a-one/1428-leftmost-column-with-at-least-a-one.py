@@ -19,11 +19,7 @@ class Solution:
         rows_with_ones = self.get_rows_with_ones()
 
         for row in rows_with_ones:
-            this_row_leftmost_column_with_one = self.binary_search_row(row)
-            self.leftmost_column_with_one = min(
-                self.leftmost_column_with_one,
-                this_row_leftmost_column_with_one,
-            )
+            self.binary_search_row(row)
 
         return (
             self.leftmost_column_with_one
@@ -38,7 +34,9 @@ class Solution:
         while left <= right:
             mid = (left + right) // 2
             if self.binaryMatrix.get(row, mid) == 1:
-                leftmost_column_with_one = mid
+                self.leftmost_column_with_one = min(
+                    self.leftmost_column_with_one, mid
+                )
                 right = mid - 1
             else:
                 left = mid + 1
