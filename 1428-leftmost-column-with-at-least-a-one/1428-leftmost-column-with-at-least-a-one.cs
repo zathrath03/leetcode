@@ -1,5 +1,5 @@
 class Solution
-    {
+{
     private const int MaxMatrixLength = 100;
     private BinaryMatrix _binaryMatrix;
     private int _rows;
