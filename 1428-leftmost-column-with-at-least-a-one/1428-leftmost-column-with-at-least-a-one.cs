@@ -33,7 +33,9 @@ class Solution
     private void BinarySearchRow(int row)
     {
         var left = 0;
-        var right = _cols - 1;
+        var right = Math.Min(_leftmostColumnWithOne, _cols - 1);
+        if (_binaryMatrix.Get(row, right) == 0)
+            return;
 
         while (left <= right)
         {
