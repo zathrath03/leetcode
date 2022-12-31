@@ -27,9 +27,10 @@ class Solution:
             else -1
         )
 
-    def binary_search_row(self, row: int) -> int:
-        leftmost_column_with_one = self.MAX_MATRIX_LENGTH + 1
-        left, right = 0, self.cols - 1
+    def binary_search_row(self, row: int) -> None:
+        left, right = 0, min(self.leftmost_column_with_one, self.cols - 1)
+        if self.binaryMatrix.get(row, right) == 0:
+            return
 
         while left <= right:
             mid = (left + right) // 2
@@ -42,8 +43,6 @@ class Solution:
                 left = mid + 1
                 if left >= self.leftmost_column_with_one:
                     break
-
-        return leftmost_column_with_one
 
     def get_rows_with_ones(self) -> set:
         rows_with_ones = set()
