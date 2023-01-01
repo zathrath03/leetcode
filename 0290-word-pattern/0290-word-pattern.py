@@ -1,7 +1,7 @@
 class Solution:
     def wordPattern(self, pattern: str, s: str) -> bool:
         tokens = s.split(" ")
-        if len(pattern) != len(tokens):
+        if len(pattern) != len(tokens) or len(set(pattern)) != len(set(tokens)):
             return False
         
         pattern_map = {}
@@ -10,8 +10,5 @@ class Solution:
             token = tokens[i]
             if pattern_map.setdefault(char, token) != token:
                 return False
-            
-        if len(set(pattern_map.values())) != len(set(pattern)):
-            return False
             
         return True
