@@ -3,8 +3,9 @@ class Solution:
         start = running_sum = total_sum = 0
         
         for i in range(len(gas)):
-            total_sum += gas[i] - cost[i]
-            running_sum += gas[i] - cost[i]
+            excess_gas = gas[i] - cost[i]
+            total_sum += excess_gas
+            running_sum += excess_gas
             if running_sum < 0:
                 running_sum = 0
                 start = i + 1
