@@ -1,4 +1,5 @@
 class Solution:
+
     def maxPoints(self, points):
         if len(points) < 3:
             return len(points)
