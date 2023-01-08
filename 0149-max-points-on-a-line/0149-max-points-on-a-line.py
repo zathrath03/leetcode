@@ -4,7 +4,7 @@ class Solution:
         if len(points) < 3:
             return len(points)
         line_point_map = self.getLines(points)
-        self.distributePointsToLines(points, line_point_map)
+        self.addPointsToLines(points, line_point_map)
         return self.findMaxPoints(line_point_map)
 
     def getLines(self, points):
@@ -13,22 +13,25 @@ class Solution:
             for pt2 in points:
                 if pt1 == pt2:
                     continue
-                self.addEquationsToMap(pt1, pt2, line_point_map)
+                self.addEquationToMap(pt1, pt2, line_point_map)
         return line_point_map
 
-    def distributePointsToLines(self, points, line_point_map):
+    def addPointsToLines(self, points, line_point_map):
         for point in points:
-            for line in line_point_map.keys():
-                self.addPointToLine(point, line, line_point_map)
+            self.addPointToLines(point, line_point_map)
+                
+    def addPointToLines(self, point, line_point_map):
+        for line in line_point_map.keys():
+            self.addPointToLine(point, line, line_point_map)
 
     def addPointToLine(self, point, line, line_point_map):
-        if self.isOnVerticalLine(point[0], line) or self.isOnLine(point, line):
+        if self.isOnLine(point, line):
             line_point_map[line].add(tuple(point))
 
     def isOnLine(self, point, line):
         m, b = line
         x, y = point
-        return y == m * x + b
+        return y == m * x + b or self.isOnVerticalLine(x, line)
 
     def isOnVerticalLine(self, x, line):
         m, b = line
@@ -40,7 +43,7 @@ class Solution:
             most_points = max(most_points, len(pts))
         return most_points
 
-    def addEquationsToMap(self, pt1, pt2, line_point_map):
+    def addEquationToMap(self, pt1, pt2, line_point_map):
         equation = self.getEquation(pt1, pt2)
         line_point_map[equation].add(tuple(pt1))
         line_point_map[equation].add(tuple(pt2))
@@ -49,8 +52,7 @@ class Solution:
         if self.isVerticalLine(p1, p2):
             return float(inf), p1[0]
         m = self.getSlope(p1, p2)
-        b = self.getYIntercept(p1, m)
-        return m, b
+        return m, self.getYIntercept(p1, m)
 
     def isVerticalLine(self, p1, p2):
         return p1[0] == p2[0]
