@@ -1,4 +1,5 @@
 class Solution:
+
     def maxPoints(self, points: list[list[int]]) -> int:
         if len(points) < 3:
             return len(points)
