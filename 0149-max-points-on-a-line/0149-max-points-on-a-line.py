@@ -32,19 +32,24 @@ class Solution:
         line: tuple[float, float],
         lines: dict[tuple[float, float], set[tuple[int, int]]],
     ) -> None:
+        if self.isOnVerticalLine(point[0], line) or self.isOnLine(point, line):
+            lines[line].add(tuple(point))
+
+    def isOnLine(self, point: list[int], line: tuple[float, float]) -> bool:
         m, b = line
         x, y = point
-        if m == float(inf) and b == x:
-            lines[(m, b)].add(tuple(point))
-        if y == m * x + b:
-            lines[(m, b)].add(tuple(point))
+        return y == m * x + b
+
+    def isOnVerticalLine(self, x: int, line: tuple[float, float]) -> bool:
+        m, b = line
+        return m == float(inf) and b == x
 
     def findMaxPoints(
         self, lines: dict[tuple[float, float], set[tuple[int, int]]]
     ) -> int:
         most_points = 0
-        for pts in lines.values():
-            most_points = max(most_points, len(pts))
+        for points in lines.values():
+            most_points = max(most_points, len(points))
         return most_points
 
     def addEquationsToLines(
