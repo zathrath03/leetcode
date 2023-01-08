@@ -22,12 +22,22 @@ class Solution:
         points: list[list[int]],
         lines: dict[tuple[float, float], set[tuple[int, int]]],
     ) -> None:
-        for pt in points:
-            for m, b in lines.keys():
-                if m == float(inf) and b == pt[0]:
-                    lines[(m, b)].add(tuple(pt))
-                if pt[1] == m * pt[0] + b:
-                    lines[(m, b)].add(tuple(pt))
+        for point in points:
+            for line in lines.keys():
+                self.addPointToLine(point, line, lines)
+
+    def addPointToLine(
+        self,
+        point: list[int],
+        line: tuple[float, float],
+        lines: dict[tuple[float, float], set[tuple[int, int]]],
+    ) -> None:
+        m, b = line
+        x, y = point
+        if m == float(inf) and b == x:
+            lines[(m, b)].add(tuple(point))
+        if y == m * x + b:
+            lines[(m, b)].add(tuple(point))
 
     def findMaxPoints(
         self, lines: dict[tuple[float, float], set[tuple[int, int]]]
