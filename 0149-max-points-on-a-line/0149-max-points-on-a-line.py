@@ -12,7 +12,7 @@ class Solution:
         lines = defaultdict(set)
         for pt1 in points:
             for pt2 in points:
-                if pt1 is pt2:
+                if pt1 == pt2:
                     continue
                 self.addEquationsToLines(pt1, pt2, lines)
         return lines
