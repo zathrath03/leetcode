@@ -16,13 +16,12 @@ public class Solution {
         var stack = new Stack<(TreeNode, TreeNode)>();
         stack.Push((p, q));
 
-        while (stack.Count > 0){
-            var (node_p, node_q) = stack.Pop();
-            if (node_p == null && node_q == null) continue;
-            if (node_p?.val != node_q?.val)
-                return false;
-            stack.Push((node_p.right, node_q.right));
-            stack.Push((node_p.left, node_q.left));
+        while (stack.Count > 0) {
+            var (pNode, qNode) = stack.Pop();
+            if (pNode == null && qNode== null) continue;
+            if (pNode?.val != qNode?.val) return false;
+            stack.Push((pNode.right, qNode.right));
+            stack.Push((pNode.left, qNode.left));
         }
 
         return true;
