@@ -19,7 +19,7 @@ public class Solution {
         while (stack.Count > 0){
             var (node_p, node_q) = stack.Pop();
             if (node_p == null && node_q == null) continue;
-            if (node_p == null || node_q == null || node_p.val != node_q.val)
+            if (node_p?.val != node_q?.val)
                 return false;
             stack.Push((node_p.right, node_q.right));
             stack.Push((node_p.left, node_q.left));
