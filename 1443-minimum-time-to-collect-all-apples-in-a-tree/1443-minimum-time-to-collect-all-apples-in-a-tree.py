@@ -8,8 +8,6 @@ class Solution:
             adjacency_list[edge[1]].add(edge[0])
 
         def dfs(node, parent):
-            if node not in adjacency_list: return 0
-            
             total_time = 0
             for child in adjacency_list[node]:
                 if child == parent: continue
