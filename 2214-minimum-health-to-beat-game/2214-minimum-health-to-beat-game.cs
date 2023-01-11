@@ -8,8 +8,6 @@ public class Solution {
             totalDamage += d;
         }
 
-        var blockedDamage = Math.Min(armor, maxDamageSeen);
-
-        return 1 + totalDamage - blockedDamage;
+        return 1 + totalDamage - Math.Min(armor, maxDamageSeen);
     }
 }
