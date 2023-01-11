@@ -29,8 +29,6 @@ public class Solution
 
     public int dfs(int node, int parent)
     {
-        if (!AdjacencyList.ContainsKey(node)) return 0;
-
         var totalTime = 0;
         foreach (var child in AdjacencyList[node])
         {
