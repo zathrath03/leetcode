@@ -2,33 +2,30 @@ public class Solution
 {
     private static Dictionary<char, HashSet<char>> _charMap;
     private static Dictionary<char, char> _memo;
+
     public string SmallestEquivalentString(string s1, string s2, string baseStr)
     {
         _charMap = new Dictionary<char, HashSet<char>>();
         _memo = new Dictionary<char, char>();
 
-        foreach (var (c1, c2) in s1.Zip(s2, (first, second) => (first, second)))
+        foreach (var (c1, c2) in s1.Zip(s2))
         {
             AddToMap(c1, c2);
             AddToMap(c2, c1);
         }
 
-        return string.Join("", baseStr.Select(BFS));
+        return string.Join("", baseStr.Select(Bfs));
     }
 
     private static void AddToMap(char key, char val)
     {
         if (_charMap.ContainsKey(key))
-        {
             _charMap[key].Add(val);
-        }
         else
-        {
-            _charMap[key] = new HashSet<char>() { val };
-        }
+            _charMap[key] = new HashSet<char> { val };
     }
 
-    private char BFS(char c)
+    private static char Bfs(char c)
     {
         if (_memo.ContainsKey(c)) return _memo[c];
         if (!_charMap.ContainsKey(c)) return c;
@@ -44,7 +41,7 @@ public class Solution
     {
         var smallestChar = c;
         seen = new HashSet<char>();
-        var queue = new HashSet<char>() { c };
+        var queue = new HashSet<char> { c };
 
         smallestChar = SmallestCharLoop(seen, queue, smallestChar);
 
@@ -53,10 +50,7 @@ public class Solution
 
     private static void UpdateMemo(HashSet<char> seen, char smallestChar)
     {
-        foreach (var c in seen)
-        {
-            _memo[c] = smallestChar;
-        }
+        foreach (var c in seen) _memo[c] = smallestChar;
     }
 
     private static char SmallestCharLoop(ISet<char> seen, ISet<char> queue, char smallestChar)
