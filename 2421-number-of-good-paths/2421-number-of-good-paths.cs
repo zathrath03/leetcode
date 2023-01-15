@@ -10,10 +10,8 @@ public class Solution
 
         foreach (var edge in sortedEdges)
         {
-            var a = edge[0];
-            var b = edge[1];
-            var parentA = FindParent(a, par);
-            var parentB = FindParent(b, par);
+            var parentA = FindParent(edge[0], par);
+            var parentB = FindParent(edge[1], par);
 
             if (vals[parentA] == vals[parentB])
             {
