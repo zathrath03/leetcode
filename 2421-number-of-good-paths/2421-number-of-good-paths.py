@@ -2,7 +2,7 @@ class Solution:
     def numberOfGoodPaths(self, vals, edges):
         edges.sort(key=lambda x: max(vals[x[0]], vals[x[1]]))
 
-        n = len(vals)
+        goodPaths = n = len(vals)
         par = [i for i in range(n)]
         rank = [1]*n
 
@@ -11,8 +11,6 @@ class Solution:
                 par[p]= par[par[p]]
                 p = par[p]
             return p
-
-        goodPaths = n
 
         for a,b in edges:
             parent_a, parent_b = find(a), find(b)
