@@ -9,3 +9,4 @@ class Solution:
             min_sum = min(cur_min, min_sum)
             total += num
         return max(max_sum, total - min_sum) if max_sum > 0 else max_sum
+    
