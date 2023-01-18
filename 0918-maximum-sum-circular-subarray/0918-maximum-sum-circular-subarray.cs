@@ -3,7 +3,7 @@ public class Solution {
         int total, curMax, curMin, maxSum, minSum;
         total = curMax = curMin = 0;
         maxSum = minSum = nums[0];
-        foreach (var num in nums){
+        foreach (var num in nums) {
             curMax = num > num + curMax ? num : num + curMax;
             maxSum = curMax > maxSum ? curMax : maxSum;
             curMin = num < num + curMin ? num : num + curMin;
