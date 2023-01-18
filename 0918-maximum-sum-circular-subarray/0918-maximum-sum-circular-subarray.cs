@@ -4,10 +4,10 @@ public class Solution {
         total = curMax = curMin = 0;
         maxSum = minSum = nums[0];
         foreach (var num in nums){
-            curMax = Math.Max(num, num + curMax);
-            maxSum = Math.Max(curMax, maxSum);
-            curMin = Math.Min(num, num + curMin);
-            minSum = Math.Min(curMin, minSum);
+            curMax = num > num + curMax ? num : num + curMax;
+            maxSum = curMax > maxSum ? curMax : maxSum;
+            curMin = num < num + curMin ? num : num + curMin;
+            minSum = curMin < minSum ? curMin : minSum; 
             total += num;
         }
         return maxSum > 0 ? Math.Max(maxSum, total - minSum) : maxSum;
