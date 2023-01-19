@@ -1,31 +1,19 @@
-class Solution
-{
-    public int GetIndex(ArrayReader reader)
-    {
-        var l = 0;
-        var y = reader.Length() - 1;
-        
-        while (l < y)
-        {
-            var third = (y - l) / 3;
-            var r = l + third;
-            var x = y - third;
-            
-            switch (reader.CompareSub(l, r, x, y))
-            {
+class Solution:
+    def getIndex(self, reader: 'ArrayReader') -> int:
+        l = 0
+        y = reader.length() - 1
+
+        while l < y:
+            third = (y - l) // 3
+            r = l + third
+            x = y - third
+
+            match reader.compareSub(l, r, x, y):
                 case 0:
-                    l = r + 1;
-                    y = x - 1;
-                    break;
+                    l = r + 1
+                    y = x - 1
                 case 1:
-                    y = r;
-                    break;
+                    y = r
                 case -1:
-                    l = x;
-                    break;
-            }
-        }
-        
-        return l;
-    }
-}
+                    l = x
+        return l 
