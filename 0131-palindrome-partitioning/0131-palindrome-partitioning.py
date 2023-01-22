@@ -1,5 +1,4 @@
 class Solution:
-    @cache
     def partition(self, s):
         if not s: return [[]]
         ans = []
