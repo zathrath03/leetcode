@@ -7,20 +7,20 @@ class Solution:
         ans = MAX_NODES
 
         while True:
-            e1, e2 = edges[node1], edges[node2]
-            if e1 in n1 and e2 in n2: break
+            if node1 != -1:
+                node1 = edges[node1]
+            if node2 != -1:
+                node2 = edges[node2]
+            if node1 in n1 and node2 in n2: break
 
-            n1.add(e1)
-            n2.add(e2)
+            n1.add(node1)
+            n2.add(node2)
 
-            if e1 in n2:
-                ans = e1
-            if e2 in n1 and e2 < ans:
-                ans = e2
+            if node1 in n2:
+                ans = node1
+            if node2 in n1 and node2 < ans:
+                ans = node2
             if ans < MAX_NODES:
                 return ans
-
-            if e1 != -1: node1 = e1
-            if e2 != -1: node2 = e2
 
         return -1
