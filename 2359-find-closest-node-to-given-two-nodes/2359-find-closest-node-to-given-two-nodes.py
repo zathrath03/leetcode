@@ -6,7 +6,7 @@ class Solution:
         n2 = {node2}
         ans = MAX_NODES
 
-        while node1 >= 0 or node2 >= 0:
+        while True:
             e1, e2 = edges[node1], edges[node2]
             if e1 in n1 and e2 in n2: break
 
