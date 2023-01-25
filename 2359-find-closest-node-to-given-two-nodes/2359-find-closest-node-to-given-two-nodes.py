@@ -1,43 +1,25 @@
-# akmarzhan1's solution found https://leetcode.com/problems/find-closest-node-to-given-two-nodes/discuss/2357791/Python-DFS-solution-easy-detailed-explanation
-
 class Solution:
     def closestMeetingNode(self, edges: List[int], node1: int, node2: int) -> int:
-        
-        res = float("inf")
-        
-        def dfs(node, arr, counter=0):
-            
-			#making sure we haven't visited the node before (i.e., value in the array != -1)
-            while arr[node]==-1 and node!=-1:
-                
-				#assigning how many moves it takes to reach node 
-                arr[node] = counter
-                next_node = edges[node]
-			
-				#going through each neighbor if exists and updating the counter 
-                dfs(edges[node], arr, counter+1)
+        if node1 == node2: return node1
+        MAX_NODES = 10 ** 5
+        n1 = {node1}
+        n2 = {node2}
+        ans = MAX_NODES
 
-            return arr
-        
-		#find moves to reach nodes from node1
-        n1 = [-1 for i in range(len(edges))]
-        dfs(node1, n1)
-		
-		#find moves to reach nodes from node2
-        n2 = [-1 for i in range(len(edges))]
-        dfs(node2, n2)
-                    
-        answer = -1
-        
-        for i in range(len(edges)):
-		
-			#check if the end node is reachable from both starting nodes
-            if n1[i]!=-1 and n2[i]!=-1:
-                maximum_distance = max(n1[i], n2[i])
-				
-				#update the distance and the final answer if relevant
-                if maximum_distance<res:
-                    res = maximum_distance
-                    answer = i
-                
-        return answer
+        while node1 >= 0 or node2 >= 0:
+            e1, e2 = edges[node1], edges[node2]
+            if e1 in n1 and e2 in n2: break
+            
+            n1.add(e1)
+            n2.add(e2)
+
+            if e1 in n2:
+                ans = min(ans, e1)
+            if e2 in n1:
+                ans = min(ans, e2)
+            if ans < MAX_NODES:
+                return ans
+
+            if e1 != -1: node1 = e1
+            if e2 != -1: node2 = e2
+        return -1
