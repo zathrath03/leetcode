@@ -15,8 +15,8 @@ class Solution:
 
             if e1 in n2:
                 ans = e1
-            if e2 in n1:
-                ans = min(ans, e2)
+            if e2 in n1 and e2 < ans:
+                ans = e2
             if ans < MAX_NODES:
                 return ans
 
