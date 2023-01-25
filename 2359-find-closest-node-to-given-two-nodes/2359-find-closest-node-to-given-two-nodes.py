@@ -1,7 +1,7 @@
 class Solution:
     def closestMeetingNode(self, edges: List[int], node1: int, node2: int) -> int:
         if node1 == node2: return node1
-        MAX_NODES = 10 ** 5
+        MAX_NODES = 10 ** 5 + 1
         n1 = {node1}
         n2 = {node2}
         ans = MAX_NODES
@@ -14,7 +14,7 @@ class Solution:
             n2.add(e2)
 
             if e1 in n2:
-                ans = min(ans, e1)
+                ans = e1
             if e2 in n1:
                 ans = min(ans, e2)
             if ans < MAX_NODES:
