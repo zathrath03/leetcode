@@ -1,24 +1,23 @@
 class Solution:
-    def snakesAndLadders(self, board: List[List[int]]) -> int:
-        n = len(board)
-        cells = [None] * (n**2 + 1)
-        label = 1
-        columns = list(range(0, n))
-        for row in range(n - 1, -1, -1):
-            for column in columns:
-                cells[label] = (row, column)
-                label += 1
-            columns.reverse()
-        dist = [-1] * (n * n + 1)
-        q = deque([1])
-        dist[1] = 0
-        while q:
-            curr = q.popleft()
-            for next in range(curr + 1, min(curr + 6, n**2) + 1):
-                row, column = cells[next]
-                destination = (board[row][column] if board[row][column] != -1
-                               else next)
-                if dist[destination] == -1:
-                    dist[destination] = dist[curr] + 1
-                    q.append(destination)
-        return dist[n * n]
+    def snakesAndLadders(self, board):
+        N, lvl = len(board), 0
+
+        line = [0]
+        for row in range(N)[::-1]:
+            line.extend(board[row] if (N - row) % 2 else board[row][::-1])
+
+        Q, visit, target = deque([1]), set(), N * N
+        next_options = lambda n: range(n + 1, min(n + 6, target) + 1)
+
+        while Q:
+            lvl += 1
+            for _ in range(len(Q)):
+                cur = Q.popleft()
+                if cur in visit: continue
+                visit.add(cur)
+
+                for nxt in next_options(cur):
+                    if line[nxt] != -1: nxt = line[nxt]
+                    if nxt == target: return lvl
+                    Q.append(nxt)
+        return -1
