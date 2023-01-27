@@ -1,6 +1,9 @@
+# This solution is from abattleofwords and found at
+# https://leetcode.com/problems/concatenated-words/discuss/159348/Python-DFS-readable-solution/579613
+
 class Solution:
     def findAllConcatenatedWordsInADict(self, words: List[str]) -> List[str]:
-        
+
         def search(word):
             for idx in range(1, len(word)):
                 prefix = word[:idx]
