@@ -1,40 +1,38 @@
 class LFUCache:
-    def __init__(self, capacity: int):
-        self.capacity=capacity
-        self.minfreq=None
-        self.keyfreq={}
-        self.freqkeys=collections.defaultdict(collections.OrderedDict)
 
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.freq_to_key = defaultdict(OrderedDict) # freq -> key -> value
+        self.key_to_freq = defaultdict(int)
+        self.min_freq = 1
+        
     def get(self, key: int) -> int:
-        if key not in self.keyfreq:
+        if key not in self.key_to_freq:
             return -1
-        freq=self.keyfreq[key]
-        val=self.freqkeys[freq][key]
-        del self.freqkeys[freq][key]
-        if not self.freqkeys[freq]:
-            if freq==self.minfreq:
-                self.minfreq+=1
-            del self.freqkeys[freq]
-        self.keyfreq[key]=freq+1
-        self.freqkeys[freq+1][key]=val
-        return val
+
+        freq = self.key_to_freq[key]
+        self.key_to_freq[key] = freq + 1
+
+        value = self.freq_to_key[freq][key]
+        del self.freq_to_key[freq][key]
+        self.freq_to_key[freq + 1][key] = value
+
+        if self.min_freq == freq and not self.freq_to_key[freq]:
+            self.min_freq += 1
+
+        return value
+        
 
     def put(self, key: int, value: int) -> None:
-        if self.capacity<=0:
-            return
-        if key in self.keyfreq:
-            freq=self.keyfreq[key]
-            self.freqkeys[freq][key]=value
+        if key in self.key_to_freq:
             self.get(key)
-            return
-        if self.capacity==len(self.keyfreq):
-            delkey,delval=self.freqkeys[self.minfreq].popitem(last=False)
-            del self.keyfreq[delkey]
-        self.keyfreq[key]=1
-        self.freqkeys[1][key]=value
-        self.minfreq=1
-
-# Your LFUCache object will be instantiated and called as such:
-# obj = LFUCache(capacity)
-# param_1 = obj.get(key)
-# obj.put(key,value)
+            self.freq_to_key[self.key_to_freq[key]][key] = value
+        else:
+            self.capacity -= 1
+            self.key_to_freq[key] = 1
+            self.freq_to_key[1][key] = value 
+            if self.capacity < 0:
+                self.capacity += 1
+                fifo_k, fifo_v = self.freq_to_key[self.min_freq].popitem(False)
+                del self.key_to_freq[fifo_k]
+            self.min_freq = 1
