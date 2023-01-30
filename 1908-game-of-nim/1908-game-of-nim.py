@@ -18,3 +18,4 @@ class Solution:
             return False
 
         return play(mask)
+ 
