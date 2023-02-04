@@ -6,15 +6,8 @@ class Solution:
         if l1 > l2:
             return False
 
-        hp1 = {i: 0 for i in string.ascii_lowercase}
-        hp2 = hp1.copy()
-
-        for s in s1:
-            hp1[s] += 1
-
-        for i in range(l1):
-            char = s2[i]
-            hp2[char] += 1
+        hp1 = Counter(s1)
+        hp2 = Counter(s2[:l1])
 
         for i in range(l1,l2):
             if hp1 == hp2:
