@@ -6,18 +6,18 @@ class Solution:
         if l1 > l2:
             return False
 
-        hp1 = Counter(s1)
-        hp2 = Counter(s2[:l1])
+        s1_char_counts = Counter(s1)
+        s2_char_counts_in_window = Counter(s2[:l1])
 
         for i in range(l1,l2):
-            if hp1 == hp2:
+            if s1_char_counts == s2_char_counts_in_window:
                 return True
             char_to_remove = s2[i-l1]
             char_to_add = s2[i]
-            hp2[char_to_remove] -= 1
-            hp2[char_to_add] += 1
+            s2_char_counts_in_window[char_to_remove] -= 1
+            s2_char_counts_in_window[char_to_add] += 1
 
-        if hp1 == hp2:
+        if s1_char_counts == s2_char_counts_in_window:
             return True
 
         return False
