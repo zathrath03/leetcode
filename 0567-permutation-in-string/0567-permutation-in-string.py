@@ -1,20 +1,30 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        s1_pattern = self.generate_pattern(s1)
-        s1_length = len(s1)
-        
-        for i in range(1 + len(s2) - s1_length):
-            if self.generate_pattern(s2[i : i + s1_length]) == s1_pattern:
+        l2 = len(s2)
+        l1 = len(s1)
+
+        if l1 > l2:
+            return False
+
+        hp1 = {i: 0 for i in string.ascii_lowercase}
+        hp2 = hp1.copy()
+
+        for s in s1:
+            hp1[s] += 1
+
+        for i in range(l1):
+            char = s2[i]
+            hp2[char] += 1
+
+        for i in range(l1,l2):
+            if hp1 == hp2:
                 return True
-        
+            char_to_remove = s2[i-l1]
+            char_to_add = s2[i]
+            hp2[char_to_remove] -= 1
+            hp2[char_to_add] += 1
+
+        if hp1 == hp2:
+            return True
+
         return False
-    
-        
-    def generate_pattern(self, s: string) -> int:
-        pattern = [0] * 26
-        zero_base = ord('a')
-        
-        for c in s:
-            pattern[ord(c) - zero_base] += 1
-            
-        return pattern
